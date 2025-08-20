@@ -1,10 +1,11 @@
 import os
 from pathlib import Path
-import torch
+
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 
 NUM_WORKERS = os.cpu_count() if os.cpu_count() is not None else 2
+
 
 def create_dataloaders(
     train_dir: Path,
@@ -13,28 +14,42 @@ def create_dataloaders(
     train_transform: transforms.Compose,
     val_test_transform: transforms.Compose,
     batch_size: int,
-    num_workers: int = NUM_WORKERS
+    num_workers: int = NUM_WORKERS,
 ):
-    train_data = datasets.ImageFolder(str(train_dir), transform=train_transform)
+    train_data = datasets.ImageFolder(
+        str(train_dir), transform=train_transform
+    )
     val_data = datasets.ImageFolder(str(val_dir), transform=val_test_transform)
-    test_data = datasets.ImageFolder(str(test_dir), transform=val_test_transform)
-    
+    test_data = datasets.ImageFolder(
+        str(test_dir), transform=val_test_transform
+    )
+
     # Get classes from train data
     class_names = train_data.classes
 
     train_dataloader = DataLoader(
-        train_data, batch_size=batch_size,
-        shuffle=True, num_workers=num_workers, pin_memory=True
+        train_data,
+        batch_size=batch_size,
+        shuffle=True,
+        num_workers=num_workers,
+        pin_memory=True,
     )
     val_dataloader = DataLoader(
-        val_data, batch_size=batch_size,
-        shuffle=False, num_workers=num_workers, pin_memory=True
+        val_data,
+        batch_size=batch_size,
+        shuffle=False,
+        num_workers=num_workers,
+        pin_memory=True,
     )
     test_dataloader = DataLoader(
-        test_data, batch_size=batch_size,
-        shuffle=False, num_workers=num_workers, pin_memory=True
+        test_data,
+        batch_size=batch_size,
+        shuffle=False,
+        num_workers=num_workers,
+        pin_memory=True,
     )
     return train_dataloader, val_dataloader, test_dataloader, class_names
+
 
 # Example usage:
 if __name__ == "__main__":
@@ -49,16 +64,19 @@ if __name__ == "__main__":
     # Transforms (reuse consistent config from your prep script)
     weights = EfficientNet_B0_Weights.IMAGENET1K_V1
     base_transforms = weights.transforms()
-    normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                                     std=[0.229, 0.224, 0.225]) 
-    train_transforms = transforms.Compose([
-        transforms.Resize(256),  
-        transforms.RandomCrop(224),
-        transforms.RandomHorizontalFlip(),
-        transforms.TrivialAugmentWide(),
-        transforms.ToTensor(),
-        normalize
-    ])
+    normalize = transforms.Normalize(
+        mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
+    )
+    train_transforms = transforms.Compose(
+        [
+            transforms.Resize(256),
+            transforms.RandomCrop(224),
+            transforms.RandomHorizontalFlip(),
+            transforms.TrivialAugmentWide(),
+            transforms.ToTensor(),
+            normalize,
+        ]
+    )
 
     BATCH_SIZE = 32
 

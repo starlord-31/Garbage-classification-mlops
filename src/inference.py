@@ -1,23 +1,28 @@
-import torch
+from pathlib import Path
+
+import matplotlib.pyplot as plt
 import mlflow
 import mlflow.pytorch
-from mlflow.entities import ViewType
-from torchvision.utils import make_grid
-import matplotlib.pyplot as plt
-from pathlib import Path
-from create_dataloaders import create_dataloaders
+import torch
 from torchvision.models import EfficientNet_B0_Weights
+from torchvision.utils import make_grid
+
+from create_dataloaders import create_dataloaders
 
 
-def get_best_run_id(metric_name='val_acc', experiment_id=None):
+def get_best_run_id(metric_name="val_acc", experiment_id=None):
     client = mlflow.tracking.MlflowClient()
-    runs = client.search_runs([experiment_id], order_by=[f"metrics.{metric_name} DESC"])
+    runs = client.search_runs(
+        [experiment_id], order_by=[f"metrics.{metric_name} DESC"]
+    )
     best_run_id = runs[0].info.run_id if runs else None
     best_val_acc = runs[0].data.metrics[metric_name] if runs else None
     return best_run_id, best_val_acc
 
 
-def load_best_mlflow_model(best_run_id: str, device: torch.device) -> torch.nn.Module:
+def load_best_mlflow_model(
+    best_run_id: str, device: torch.device
+) -> torch.nn.Module:
     model_uri = f"runs:/{best_run_id}/model"
     model = mlflow.pytorch.load_model(model_uri, map_location=device)
     model = model.to(device)
@@ -31,7 +36,7 @@ def pred_and_plot_images(
     test_dl: torch.utils.data.DataLoader,
     class_names: list,
     device: torch.device,
-    num_examples: int = 10
+    num_examples: int = 10,
 ):
     model.eval()
     images_shown = 0
@@ -40,7 +45,9 @@ def pred_and_plot_images(
         images, labels = images.to(device), labels.to(device)
         preds = model(images)
         preds_idx = preds.argmax(dim=1)
-        img_grid = make_grid(images.cpu(), nrow=min(num_examples, len(images)), normalize=True)
+        img_grid = make_grid(
+            images.cpu(), nrow=min(num_examples, len(images)), normalize=True
+        )
         plt.imshow(img_grid.permute(1, 2, 0))
         title_labels = [class_names[i] for i in preds_idx.cpu().numpy()]
         plt.title("Predictions: " + " | ".join(title_labels))
@@ -53,7 +60,11 @@ def pred_and_plot_images(
 
 def get_experiment_id_from_mlruns(mlruns_path):
     mlruns_dir = Path(mlruns_path)
-    experiment_ids = [p.name for p in mlruns_dir.iterdir() if p.is_dir() and not p.name.startswith('.')]
+    experiment_ids = [
+        p.name
+        for p in mlruns_dir.iterdir()
+        if p.is_dir() and not p.name.startswith(".")
+    ]
     if not experiment_ids:
         raise ValueError(f"No experiment folders found in {mlruns_path}")
     # For demonstration, pick the first experiment ID found
@@ -68,7 +79,7 @@ if __name__ == "__main__":
     experiment_id = get_experiment_id_from_mlruns(mlruns_path)
     print(f"Using experiment ID from mlruns folder: {experiment_id}")
 
-    metric_name = 'val_acc'
+    metric_name = "val_acc"
     best_run_id, best_val_acc = get_best_run_id(metric_name, experiment_id)
 
     if best_run_id is not None and best_val_acc is not None:
@@ -91,7 +102,7 @@ if __name__ == "__main__":
         test_dir=test_dir,
         train_transform=base_transforms,
         val_test_transform=base_transforms,
-        batch_size=BATCH_SIZE
+        batch_size=BATCH_SIZE,
     )
 
     pred_and_plot_images(
@@ -99,5 +110,5 @@ if __name__ == "__main__":
         test_dl=test_dl,
         class_names=class_names,
         device=device,
-        num_examples=10
+        num_examples=10,
     )

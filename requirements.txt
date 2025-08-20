@@ -34,3 +34,4 @@ torch
 torchvision
 pillow
 prometheus-fastapi-instrumentator
+isort
