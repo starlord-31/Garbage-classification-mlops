@@ -2,7 +2,12 @@
 
 ## Project Overview
 
-This project is an end-to-end MLOps pipeline for garbage image classification, combining data processing, model training, deployment, monitoring, and continuous evaluation for robust production readiness.
+Proper classification of garbage is essential for efficient waste management and recycling. Traditionally, this process is manual, time-consuming, and error-prone due to the large volume and diversity of waste materials. Misclassification leads to contamination of recyclable materials, higher processing costs, and environmental harm.
+
+Automating garbage classification with AI-powered image recognition can significantly enhance accuracy, speed, and scalability. However, building such an AI system requires careful coordination of data processing, model training, deployment infrastructure, monitoring, and continuous evaluation to ensure consistent performance in real-world conditions.
+
+This project addresses these challenges by applying comprehensive MLOps practices to develop a robust garbage classification pipeline. This pipeline improves classification accuracy while providing production-ready deployment and monitoring solutions, enabling efficient and reliable waste sorting at scale.
+
 **Note:** Large folders (`mlruns/`, `models/`, `prometheus-3.5.0.linux-amd64/`) are stored on Google Drive and must be downloaded separately.
 
 ---
@@ -293,3 +298,4 @@ This project is licensed under the MIT License. See the LICENSE file for details
 ## 🤝 Contributing
 
 Contributions are welcome! Please open issues or submit pull requests to help improve the project.
+
