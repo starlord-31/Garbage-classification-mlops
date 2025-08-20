@@ -1,6 +1,5 @@
 mlruns/
 models/
-data/
 subset_data/
 garbage-classifier-frontend/
 prometheus-3.5.0.linux-amd64/
@@ -211,3 +210,5 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+node_modules
+node_modules
