@@ -37,6 +37,8 @@ jobs:
         flake8 .
 
     - name: Run tests with pytest
+      env:
+        PYTHONPATH: ${{ github.workspace }}
       run: |
         pytest tests/
 
