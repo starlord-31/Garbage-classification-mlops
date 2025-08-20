@@ -1,5 +1,6 @@
 import io
 import logging
+import os
 
 import mlflow.pytorch
 import torch
@@ -33,9 +34,9 @@ instrumentator.instrument(app).expose(
 )
 
 # Load your best model once on startup
-mlflow.set_tracking_uri(
-    "file:///home/starlord/Garbage-classification-mlops/mlruns"
-)
+mlruns_path = os.path.abspath("mlruns")
+mlflow.set_tracking_uri(f"file://{mlruns_path}")
+
 best_run_id = "065f403e8f514882b45cf1146756efa0"
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = mlflow.pytorch.load_model(
