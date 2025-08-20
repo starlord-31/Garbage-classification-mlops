@@ -176,15 +176,6 @@ This will provide rich visualization of metrics such as API latency, error rates
 
 ---
 
-## ✔️ Testing
-
-Run automated tests:
-```bash
-pytest tests/
-```
-
----
-
 ## 🔄 Continuous Integration and Continuous Deployment (CI/CD)
 
 This project uses GitHub Actions to automate CI/CD, ensuring code quality, testing, and Docker image building and publishing.
@@ -387,6 +378,7 @@ This project is licensed under the MIT License. See the LICENSE file for details
 ## 🤝 Contributing
 
 Contributions are welcome! Please open issues or submit pull requests to help improve the project.
+
 
 
 
