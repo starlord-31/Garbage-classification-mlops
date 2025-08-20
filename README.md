@@ -12,6 +12,15 @@ This project addresses these challenges by applying comprehensive MLOps practice
 
 ---
 
+## Data Source
+
+The dataset used for training and evaluation in this project was sourced from Kaggle:  
+[Garbage Dataset Classification](https://www.kaggle.com/datasets/zlatan599/garbage-dataset-classification/data)
+
+This publicly available dataset contains labeled images of various types of garbage, enabling the development of accurate classification models.
+
+---
+
 ## 🏗️ Architecture Overview
 
 The system implements a modular pipeline enabling reliable garbage classification:
@@ -298,4 +307,5 @@ This project is licensed under the MIT License. See the LICENSE file for details
 ## 🤝 Contributing
 
 Contributions are welcome! Please open issues or submit pull requests to help improve the project.
+
 
