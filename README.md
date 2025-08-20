@@ -29,7 +29,7 @@ The system implements a modular pipeline enabling reliable garbage classificatio
 
 ---
 
-## 🔄 Workflow Components
+## 📋 Workflow Components
 
 ### 1. Data Ingestion and Preparation
 
@@ -184,6 +184,85 @@ pytest tests/
 
 ---
 
+## 🔄 Continuous Integration and Continuous Deployment (CI/CD)
+
+This project uses GitHub Actions to automate CI/CD, ensuring code quality, testing, and Docker image building and publishing.
+
+### Workflow Overview
+
+- **Trigger:** Runs on pushes and pull requests to the `main` branch.
+- **Steps:**  
+  - Checkout code  
+  - Set up Python 3.10 and cache dependencies  
+  - Install Python packages (flake8, pytest)  
+  - Lint code with flake8  
+  - Run tests with pytest  
+  - Build Docker image  
+  - Log in to Docker Hub using GitHub secrets  
+  - Push Docker image to Docker Hub  
+  - Run frontend tests with Node.js and npm  
+
+### Docker Hub Setup
+
+To push Docker images, add your Docker Hub credentials as GitHub secrets under **Settings > Secrets and variables > Actions**:  
+- `DOCKER_USERNAME` — your Docker Hub username  
+- `DOCKER_PASSWORD` — your Docker Hub password or access token  
+
+### How to Trigger
+
+Push to `main` or open a pull request targeting `main` to automatically run the pipeline. Check progress and results in the **Actions** tab on GitHub.
+
+This CI/CD pipeline helps automate testing, maintain quality, and manage container deployments efficiently.
+
+---
+
+## ⚙️ Development Workflow and Automation
+
+### 1. Testing
+
+- Added **integration tests** (`tests/test_integration.py`) using FastAPI’s TestClient to verify API endpoints including root, prediction, and invalid input handling.
+- Implemented **API tests** (`tests/test_api.py`) that send real HTTP requests with image data for end-to-end verification.
+- Tests are executed using `pytest` and require setting the Python path:
+```bash
+PYTHONPATH=. pytest tests/
+```
+
+### 2. Pre-commit Hooks
+
+- Configured **pre-commit hooks** via `.pre-commit-config.yaml` to run code linting and formatting automatically before commits.
+- Included hooks:
+  - `flake8` for code style and lint checks.
+  - Others like `isort` for import sorting if configured.
+- Activate locally with:
+```bash
+pre-commit install
+```
+
+### 3. Makefile Automation
+
+- Created a **Makefile** for common developer tasks:
+  - `make lint` — runs linters and style checks.
+  - `make test` — runs the full test suite with proper environment.
+  - `make clean` — clears caches and temporary files.
+- Simplifies running frequent commands consistently.
+
+### 4. CI/CD Pipeline
+
+- Pipeline automatically runs pre-commit checks and tests on commits and pull requests.
+- Ensures code quality and reduces errors before merging.
+
+---
+
+### Code Style and Formatting
+
+- Adjusted code for PEP 8 compliance:
+  - Fixed line length issues.
+  - Added required blank lines.
+  - Removed unused imports.
+- Recommended tools include **Black** and **isort** for formatting and import sorting.
+
+---
+
 ## 📁 Project Structure
 
 ```
@@ -307,5 +386,6 @@ This project is licensed under the MIT License. See the LICENSE file for details
 ## 🤝 Contributing
 
 Contributions are welcome! Please open issues or submit pull requests to help improve the project.
+
 
 
