@@ -1,4 +1,5 @@
 # Garbage Classification MLOps Project
+![Garbage Classification](1_e2kdmwqe-1GxUQ2KDq8x7w.png)
 
 ## Project Overview
 
@@ -386,6 +387,7 @@ This project is licensed under the MIT License. See the LICENSE file for details
 ## 🤝 Contributing
 
 Contributions are welcome! Please open issues or submit pull requests to help improve the project.
+
 
 
 
