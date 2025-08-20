@@ -1,6 +1,5 @@
 mlruns/
 models/
-subset_data/
 garbage-classifier-frontend/
 prometheus-3.5.0.linux-amd64/
 # Byte-compiled / optimized / DLL files
